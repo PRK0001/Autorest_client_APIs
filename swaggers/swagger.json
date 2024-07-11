@@ -13,287 +13,101 @@
       "application/json"
     ],
     "paths": {
-      "/v1.0/myorg/reports": {
-        "get": {
-          "tags": [
-            "Reports"
-          ],
-          "summary": "Returns a list of reports from **My workspace**.",
-          "description": "\nThis API also returns shared reports and reports from shared apps. Reports that reside in shared workspaces can be accessed using the [Get Reports In Group API](/rest/api/power-bi/reports/get-reports-in-group).\n\nSince paginated reports (RDL) don't have a dataset, the dataset ID value in the API response for paginated reports isn't displayed.\n\n## Required Scope\n\nReport.ReadWrite.All or Report.Read.All\n<br><br>",
-          "operationId": "Reports_GetReports",
-          "consumes": [],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/definitions/Reports"
-              }
-            }
-          },
-          "x-ms-examples": {
-            "Example": {
-              "parameters": {},
-              "responses": {
-                "200": {
-                  "body": {
-                    "value": [
-                      {
-                        "datasetId": "cfafbeb1-8037-4d0c-896e-a46fb27ff229",
-                        "id": "5b218778-e7a5-4d73-8187-f10824047715",
-                        "name": "SalesMarketing",
-                        "webUrl": "https://app.powerbi.com//reports/5b218778-e7a5-4d73-8187-f10824047715",
-                        "embedUrl": "https://app.powerbi.com/reportEmbed?reportId=5b218778-e7a5-4d73-8187-f10824047715"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "deprecated": false
-        }
-      },
-      "/v1.0/myorg/reports/{reportId}/exports/{exportId}": {
-        "get": {
-          "tags": [
-            "Reports"
-          ],
-          "summary": "Returns the current status of the [Export to File](/rest/api/power-bi/reports/export-to-file) job for the specified report from **My workspace**.",
-          "description": "\nWhen the export job status is 'Succeeded' use the [GetFileOfExportToFile API](/rest/api/power-bi/reports/get-file-of-export-to-file) to retrieve the file.\n\n## Required Scope\n\nReport.ReadWrite.All or Report.Read.All\n<br><br>",
-          "operationId": "Reports_GetExportToFileStatus",
-          "consumes": [],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "reportId",
-              "in": "path",
-              "description": "The report ID",
-              "required": true,
-              "type": "string",
-              "format": "uuid"
-            },
-            {
-              "name": "exportId",
-              "in": "path",
-              "required": true,
-              "description": "The export ID",
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/definitions/Export"
-              }
-            },
-            "202": {
-              "description": "Accepted",
-              "schema": {
-                "$ref": "#/definitions/Export"
-              }
-            }
-          },
-          "x-ms-examples": {
-            "Example": {
-              "parameters": {},
-              "responses": {
-                "200": {
-                  "body": {
-                    "id": "Mi9C5419i....PS4=",
-                    "createdDateTime": "2021-12-08T10:26:09.3069086Z",
-                    "lastActionDateTime": "2021-12-08T10:26:38.016851Z",
-                    "reportId": "cad51cfa-e740-324f-acbb-8ca43c40a2d4",
-                    "reportName": "Report name",
-                    "status": "Succeeded",
-                    "percentComplete": 100,
-                    "resourceLocation": "...Mi9C5419i....PS4=/file",
-                    "resourceFileExtension": ".pptx",
-                    "expirationTime": "2021-12-09T10:26:11.586756Z"
-                  }
-                }
-              }
-            }
-          },
-          "deprecated": false
-        }
-      },
-      "/v1.0/myorg/reports/{reportId}/exports/{exportId}/file": {
-        "get": {
-            "tags": [
-                "Reports"
-            ],
-            "summary": "Returns the file from the [Export to File](/rest/api/power-bi/reports/export-to-file) job for the specified report from **My workspace**.",
-            "description": "\n## Required Scope\n\nReport.ReadWrite.All or Report.Read.All\n<br><br>",
-            "operationId": "Reports_GetFileOfExportToFile",
-            "consumes": [],
-            "produces": [
-                "application/*",
-                "image/*",
-                "text/csv",
-                "text/xml"
-            ],
-            "parameters": [
-                {
-                    "name": "reportId",
-                    "in": "path",
-                    "description": "The report ID",
-                    "required": true,
-                    "type": "string",
-                    "format": "uuid"
-                },
-                {
-                    "name": "exportId",
-                    "in": "path",
-                    "required": true,
-                    "description": "The export ID",
-                    "type": "string"
-                }
-            ],
-            "responses": {
-                "200": {
-                    "schema": {
-                        "type": "file"
+        "/v1.0/myorg/reports/{reportId}/exports/{exportId}/file": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "Returns the file from the [Export to File](/rest/api/power-bi/reports/export-to-file) job for the specified report from **My workspace**.",
+                "description": "\n## Required Scope\n\nReport.ReadWrite.All or Report.Read.All\n<br><br>",
+                "operationId": "Reports_GetFileOfExportToFile",
+                "consumes": [],
+                "produces": [
+                    "application/*",
+                    "image/*",
+                    "text/csv",
+                    "text/xml"
+                ],
+                "parameters": [
+                    {
+                        "name": "reportId",
+                        "in": "path",
+                        "description": "The report ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
                     },
-                    "description": "The exported file"
-                }
-            },
-            "deprecated": false
-        }
-    }
-    },
-    "definitions": {
-      "Reports": {
-        "description": "The OData response wrapper for a Power BI report collection",
-        "properties": {
-          "odata.context": {
-            "type": "string",
-            "description": "OData context"
-          },
-          "value": {
-            "type": "array",
-            "description": "The report collection",
-            "items": {
-              "$ref": "#/definitions/Report"
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The export ID",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "file"
+                        },
+                        "description": "The exported file"
+                    }
+                },
+                "deprecated": false
             }
-          }
-        }
-      },
-      "Report": {
-        "description": "A Power BI report. The API returns a subset of the following list of report properties. The subset depends on the API called, caller permissions, and the availability of data in the Power BI database.",
-        "allOf": [
-          {
-            "$ref": "#/definitions/ReportBaseProperties"
-          }
-        ]
-      },
-      "ReportBaseProperties": {
-        "required": [
-          "id"
-        ],
-        "description": "Power BI report common properties. The API returns a subset of the following list of report properties. The subset depends on the API called, caller permissions, and the availability of data in the Power BI database.",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "The report ID"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the report"
-          },
-          "datasetId": {
-            "type": "string",
-            "description": "The dataset ID of the report"
-          },
-          "appId": {
-            "type": "string",
-            "description": "The app ID, returned only if the report belongs to an app"
-          },
-          "description": {
-            "type": "string",
-            "description": "The report description"
-          },
-          "reportType": {
-            "type": "string",
-            "description": "The report type",
-            "enum": [
-              "PaginatedReport",
-              "PowerBIReport"
-            ]
-          },
-          "originalReportId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "The actual report ID when the workspace is published as an app."
-          },
-          "isOwnedByMe": {
-            "type": "boolean",
-            "description": "Determine if the report is created by the current user."
-          }
-        }
-      },
-      "Export": {
-        "description": "An object describing the details and current state of an export to file job",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The export to file job ID"
-          },
-          "createdDateTime": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The start date and time of the export to file job"
-          },
-          "lastActionDateTime": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date and time of the last change to the export to file job"
-          },
-          "reportId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "The ID of the exported report"
-          },
-          "reportName": {
-            "type": "string",
-            "description": "The name of the exported report"
-          },
-          "status": {
-            "type": "string",
-            "description": "The current state of the export to file job",
-            "enum": [
-              "Undefined",
-              "NotStarted",
-              "Running",
-              "Succeeded",
-              "Failed"
-            ]
-          },
-          "percentComplete": {
-            "type": "integer",
-            "description": "Percentage completion of the export job"
-          },
-          "resourceLocation": {
-            "type": "string",
-            "description": "The location where the exported file can be retrieved"
-          },
-          "resourceFileExtension": {
-            "type": "string",
-            "description": "The file extension of the exported file"
-          },
-          "expirationTime": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The time when the exported file will expire"
-          }
+        },
+        "/v1.0/myorg/groups/{groupId}/reports/{reportId}/exports/{exportId}/file": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "Returns the file from the [Export to File In Group](/rest/api/power-bi/reports/export-to-file-in-group) job for the specified report from the specified workspace.",
+                "description": "\n## Permissions\n\nThis API call can be called by a service principal profile. For more information see: [Service principal profiles in Power BI Embedded](/power-bi/developer/embedded/embed-multi-tenancy).\n\n## Required Scope\n\nReport.ReadWrite.All or Report.Read.All\n<br><br>",
+                "operationId": "Reports_GetFileOfExportToFileInGroup",
+                "consumes": [],
+                "produces": [
+                    "application/*",
+                    "image/*",
+                    "text/csv",
+                    "text/xml"
+                ],
+                "parameters": [
+                    {
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The workspace ID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "reportId",
+                        "in": "path",
+                        "description": "The report ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The export ID",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "file"
+                        },
+                        "description": "The exported file"
+                    }
+                },
+                "deprecated": false
+            }
         }
       }
-    }
+
+
   }
