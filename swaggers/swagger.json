@@ -13,101 +13,51 @@
       "application/json"
     ],
     "paths": {
-        "/v1.0/myorg/reports/{reportId}/exports/{exportId}/file": {
-            "get": {
+        "/v1.0/myorg/reports/{reportId}": {
+            "delete": {
                 "tags": [
                     "Reports"
                 ],
-                "summary": "Returns the file from the [Export to File](/rest/api/power-bi/reports/export-to-file) job for the specified report from **My workspace**.",
-                "description": "\n## Required Scope\n\nReport.ReadWrite.All or Report.Read.All\n<br><br>",
-                "operationId": "Reports_GetFileOfExportToFile",
+                "summary": "Deletes the specified report from **My workspace**.",
+                "description": "\n## Required Scope\n\nReport.ReadWrite.All\n<br><br>",
+                "operationId": "Reports_DeleteReport",
                 "consumes": [],
-                "produces": [
-                    "application/*",
-                    "image/*",
-                    "text/csv",
-                    "text/xml"
-                ],
+                "produces": ["application/json"],
                 "parameters": [
                     {
                         "name": "reportId",
-                        "in": "path",
                         "description": "The report ID",
+                        "in": "path",
                         "required": true,
                         "type": "string",
                         "format": "uuid"
                     },
                     {
-                        "name": "exportId",
-                        "in": "path",
-                        "required": true,
-                        "description": "The export ID",
-                        "type": "string"
+                        "name": "ServicePrincipalProfileId",
+                        "in": "header",
+                        "type": "string",
+                        "format": "uuid",
+                        "x-ms-header-collection-prefix": "X-PowerBI-Profile-Id"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "schema": {
-                            "type": "file"
-                        },
-                        "description": "The exported file"
+                        "description": "OK"
                     }
                 },
-                "deprecated": false
-            }
-        },
-        "/v1.0/myorg/groups/{groupId}/reports/{reportId}/exports/{exportId}/file": {
-            "get": {
-                "tags": [
-                    "Reports"
-                ],
-                "summary": "Returns the file from the [Export to File In Group](/rest/api/power-bi/reports/export-to-file-in-group) job for the specified report from the specified workspace.",
-                "description": "\n## Permissions\n\nThis API call can be called by a service principal profile. For more information see: [Service principal profiles in Power BI Embedded](/power-bi/developer/embedded/embed-multi-tenancy).\n\n## Required Scope\n\nReport.ReadWrite.All or Report.Read.All\n<br><br>",
-                "operationId": "Reports_GetFileOfExportToFileInGroup",
-                "consumes": [],
-                "produces": [
-                    "application/*",
-                    "image/*",
-                    "text/csv",
-                    "text/xml"
-                ],
-                "parameters": [
-                    {
-                        "name": "groupId",
-                        "in": "path",
-                        "required": true,
-                        "description": "The workspace ID",
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    {
-                        "name": "reportId",
-                        "in": "path",
-                        "description": "The report ID",
-                        "required": true,
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    {
-                        "name": "exportId",
-                        "in": "path",
-                        "required": true,
-                        "description": "The export ID",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "schema": {
-                            "type": "file"
+                "x-ms-examples": {
+                    "Example": {
+                        "parameters": {
+                            "reportId": "5b218778-e7a5-4d73-8187-f10824047715"
                         },
-                        "description": "The exported file"
+                        "responses": {
+                            "200": {}
+                        }
                     }
                 },
                 "deprecated": false
             }
         }
+        }
       }
-
-
-  }
+  
